@@ -1,0 +1,46 @@
+//READ user page
+//CHEER user 
+
+#include <vector>
+#include <iostream>
+#include <numeric>
+
+using namespace std;
+
+int main(){
+    vector<int> user(100000);
+    vector<int> page(1000);
+    
+    int x, y, total_user=0, amount;
+    string command;
+    cin>>amount;
+    for(int i = 0; i < amount; ++i){
+        cin>>command;
+        if(command=="READ") {
+            cin>>x>>y;
+            if(user[x]==0) {
+                user[x] = y;
+                page[y]++;
+                total_user++;
+            }
+            else {
+                page[user[x]]--;
+                user[x] = y;
+                page[y]++;
+            }
+        }
+        else {		//CHEER
+            cin>>x;
+            if(total_user==0)
+                cout<<0<<endl;
+            else if(total_user==1)
+                if(user[x] == 0)
+                    cout<<0<<endl;
+                else
+                    cout<<1<<endl;
+            else 
+                cout << std::accumulate(page.begin(),page.begin()+user[x],0)/double(total_user-1)<<endl;
+        }
+    }
+    
+}
